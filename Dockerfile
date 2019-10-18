@@ -4,6 +4,9 @@
 # BUILD: docker build --rm -t puckel/docker-airflow .
 # SOURCE: https://github.com/puckel/docker-airflow
 
+# FORK VERSION 1.0
+# FORK AUTHOR: Alex Galea
+
 FROM python:3.7-slim-stretch
 LABEL maintainer="Puckel_"
 
@@ -73,6 +76,12 @@ RUN set -ex \
 COPY script/entrypoint.sh /entrypoint.sh
 COPY config/airflow.cfg ${AIRFLOW_USER_HOME}/airflow.cfg
 
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+
+RUN chown -R airflow: /app
 RUN chown -R airflow: ${AIRFLOW_USER_HOME}
 
 EXPOSE 8080 5555 8793

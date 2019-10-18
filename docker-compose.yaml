@@ -1,0 +1,34 @@
+version: '2.1'
+services:
+    webserver:
+        image: airflow-test:latest
+        restart: always
+        environment:
+            - PROJECT_HOME=/app
+            - LOAD_EX=n
+            - EXECUTOR=Sequential
+            - AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:////usr/local/airflow/db/airflow.db
+        volumes:
+            - ./airflow-logs:/usr/local/airflow/logs
+            - ./dags:/usr/local/airflow/dags
+            - ./db:/usr/local/airflow/db
+            - ./.credentials:/.credentials
+        ports:
+            - "8080:8080"
+        command: webserver
+    scheduler:
+        image: airflow-test:latest
+        restart: always
+        environment:
+            - PROJECT_HOME=/app
+            - LOAD_EX=n
+            - EXECUTOR=Sequential
+            - AIRFLOW__CORE__SQL_ALCHEMY_CONN=sqlite:////usr/local/airflow/db/airflow.db
+        depends_on:
+            - webserver
+        volumes:
+            - ./airflow-logs:/usr/local/airflow/logs
+            - ./dags:/usr/local/airflow/dags
+            - ./db:/usr/local/airflow/db
+            - ./.credentials:/.credentials
+        command: scheduler

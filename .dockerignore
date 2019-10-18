@@ -1,1 +1,16 @@
+puckel-docker-airflow
+udemy-course-docker-airflow
+**/__pycache__
+**/*.pyc
+venv
+Dockerfile
 .git
+.cache
+.DS_Store
+.vscode
+.credentials
+logs
+img
+db
+data
+dags
