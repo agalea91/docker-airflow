@@ -6,4 +6,4 @@ if __name__ == '__main__':
     name = os.path.join(os.getenv('PROJECT_HOME', '/'), name)
     print('writing test file {}'.format(name))
     with open(name, 'w') as f:
-        f.write('Test file')
+        f.write(os.getenv('API_KEY', '.env failed to load...') + '\n')

@@ -1,7 +1,7 @@
 version: '2.1'
 services:
     webserver:
-        image: airflow-test:latest
+        image: airflow_test:latest
         restart: always
         environment:
             - PROJECT_HOME=/app
@@ -12,12 +12,12 @@ services:
             - ./airflow-logs:/usr/local/airflow/logs
             - ./dags:/usr/local/airflow/dags
             - ./db:/usr/local/airflow/db
-            - ./.credentials:/.credentials
+            - ./.credentials:/app/.credentials
         ports:
             - "8080:8080"
         command: webserver
     scheduler:
-        image: airflow-test:latest
+        image: airflow_test:latest
         restart: always
         environment:
             - PROJECT_HOME=/app
@@ -30,5 +30,5 @@ services:
             - ./airflow-logs:/usr/local/airflow/logs
             - ./dags:/usr/local/airflow/dags
             - ./db:/usr/local/airflow/db
-            - ./.credentials:/.credentials
+            - ./.credentials:/app/.credentials
         command: scheduler

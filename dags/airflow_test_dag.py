@@ -21,13 +21,13 @@ if len(sys.argv) > 1:
 else:
     scrape_folder = None
 
-from page_monitor.config import Config
+from app.config import Config
 config = Config()
 
 # Page monitor DAG for botify extract
 
-botify_page_monitor_dag = DAG(
-    'test_page_monitor',
+app_dag = DAG(
+    'test_app',
     default_args=config.AIRFLOW_DEFAULT_ARGS,
     schedule_interval=config.MONITOR_FREQ,
     catchup=config.CATCHUP,
@@ -42,7 +42,7 @@ sleep_task = BashOperator(
         'python_path': config.PYTHON_PATH,
         'file_path': os.path.join(project_home, 'sleep_5_seconds.py'),
     },
-    dag=botify_page_monitor_dag
+    dag=app_dag
 )
 
 # Step 2: process for errors
@@ -57,7 +57,7 @@ file_task = BashOperator(
         'python_path': config.PYTHON_PATH,
         'file_path': os.path.join(project_home, 'make_file.py'),
     },
-    dag=botify_page_monitor_dag
+    dag=app_dag
 )
 
 
