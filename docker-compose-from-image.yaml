@@ -1,7 +1,7 @@
 version: '2.1'
 services:
     webserver:
-        build: .
+        image: airflow_test:latest
         restart: always
         environment:
             - PROJECT_HOME=/app
@@ -17,7 +17,7 @@ services:
             - "8080:8080"
         command: webserver
     scheduler:
-        build: .
+        image: airflow_test:latest
         restart: always
         environment:
             - PROJECT_HOME=/app
